@@ -1,0 +1,4 @@
+package dataBaseModule
+
+class Room {
+}
