@@ -1,4 +1,4 @@
-package com.example.plantmenegerapp
+package com.example.PlantManagerapp
 
 import org.junit.Test
 

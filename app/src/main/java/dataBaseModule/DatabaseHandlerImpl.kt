@@ -1,12 +1,11 @@
 package dataBaseModule
 
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 
 class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
 
-    private val myDBHelper = DBHelper(context)
+    private val myDBHelper = DatabaseHelper(context)
     private lateinit var db: SQLiteDatabase
 
     fun openBD() {
@@ -14,19 +13,10 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
     }
 
     override fun addRoom(left_up: Int, right_down: Int) {
+        TODO("Not yet implemented")
     }
 
-    override fun addPlant(
-        plant_id: Int,
-        name: String,
-        room_id: Int,
-        watering_day: String,
-        transplant_day: String,
-        fertilization_day: String,
-        period_id: Int,
-        coord_x: Double,
-        coord_y: Double
-    ) {
+    override fun addPlant(plant_id: Int, name: String, room_id: Int, watering_day: String, transplant_day: String, fertilization_day: String, period_id: Int, coord_x: Double, coord_y: Double) {
         TODO("Not yet implemented")
     }
 
@@ -110,11 +100,8 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
         TODO("Not yet implemented")
     }
 
-    override fun getCharctOfPlant(
-        name: String,
-        period_of_life: Int,
-        season: String
-    ): List<Characteristics> {
+    override fun getCharctOfPlant(name: String, period_of_life: Int, season: String): List<Characteristics> {
         TODO("Not yet implemented")
     }
+
 }
