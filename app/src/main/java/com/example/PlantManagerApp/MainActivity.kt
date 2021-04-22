@@ -1,13 +1,13 @@
-package com.example.plantmanagerapp
+package com.example.PlantManagerApp
 
 import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.PlantManagerapp.databinding.ActivityMainBinding
 import dataBaseModule.DatabaseHelper
-import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,30 +19,26 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         mDBHelper = DatabaseHelper(this)
-        try {
-            mDBHelper!!.updateDataBase()
-        } catch (mIOException: IOException) {
-            throw Error("UnableToUpdateDatabase")
-        }
+        val view = setContentView(R.layout.activity_main)
 
         mDb = try {
-            mDBHelper!!.writableDatabase
+            mDBHelper!!.readableDatabase
         } catch (mSQLException: SQLException) {
             throw mSQLException
         }
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        val button = findViewById<Button>(R.id.button)
+        val textView = findViewById<TextView>(R.id.textView)
 
-        binding.button.setOnClickListener {
+        button.setOnClickListener {
             var language = ""
             val cursor: Cursor = mDb!!.rawQuery("SELECT * FROM language", null)
-            cursor.moveToFirst()
-            while (!cursor.isAfterLast) {
-                language += cursor.getString(1).toString() + " | "
-                cursor.moveToNext()
+            while (cursor.moveToNext()) {
+                val curr: String = cursor.getString(cursor.getColumnIndex("name"))
+                language += "$curr | "
             }
             cursor.close()
-            binding.textView.text = language
+            textView.text = language
         }
     }
 }

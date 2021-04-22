@@ -1,7 +1,3 @@
-
-create table android_metadata ( locale  text default en_US );
-insert into android_metadata values ('en_US');
-
 create table language (
   id integer primary key,
   name varchar(255)

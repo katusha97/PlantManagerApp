@@ -1,0 +1,1 @@
+INSERT INTO language VALUES (1, "русский"), (2, "english");
