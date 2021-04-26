@@ -1,5 +1,5 @@
 create table language (
-  id integer primary key,
+  id integer primary key autoincrement not null,
   name varchar(255)
 );
 
@@ -17,20 +17,20 @@ create table user_app (
 -- период цветения и т.д) P.S. Может быть нужно заменить на enum, ведь не так уж часто
 -- предполагается добавлять новые этапы жизни
 create table period_of_life (
-    id integer primary key,
+    id integer primary key autoincrement not null,
     name varchar(255)
 );
 
 -- таблица, в которой хранятся название и описание разных почв
 create table soil (
-    id integer primary key,
+    id integer primary key autoincrement not null,
     name varchar(255) not null,
     description text
 );
 
 -- таблица всех растений с описанием
 create table plants (
-    id integer primary key,
+    id integer primary key autoincrement not null,
     name varchar(255) not null unique,
     description text
 );
@@ -39,7 +39,7 @@ create table plants (
 -- для его хорошего самочувствия
 --create type seasons as enum ('summer', 'fall', 'winter', 'spring');
 create table season_enum (
-    id integer primary key,
+    id integer primary key autoincrement not null,
     season varchar(255) not null,
     check (season = 'summer' || season = 'fall' || season = 'winter' || season = 'spring')
 );
@@ -75,7 +75,7 @@ create table soil_for_plant (
 
 -- таблица, из которой можно получить все его растения
 create table plants_of_user (
-    id integer primary key,
+    id integer primary key autoincrement not null,
     plant_id int not null references plants(id),
     name varchar(255) unique not null,
     room_id int not null references rooms(id),
@@ -92,7 +92,7 @@ create table plants_of_user (
 --create type irrigation as enum ('weak', 'middle', 'strong');
 
 create table irrigation_power_enum (
-    id integer primary key,
+    id integer primary key autoincrement not null,
     irrigation_power varchar(255),
     check (irrigation_power = 'weak' || irrigation_power = 'middle' || irrigation_power = 'strong')
 );
@@ -142,7 +142,7 @@ create table plant_transplant (
 
 -- таблица, в которой хранится информация об удобрениях и их описание
 create table fertilizers (
-    id integer primary key,
+    id integer primary key autoincrement not null,
     name varchar(255) not null unique,
     description text
 );
@@ -174,7 +174,7 @@ create table plant_spraying (
 
 -- таблица с возможными заболеваниями растений и путями лечения
 create table illnesses (
-    id integer primary key,
+    id integer primary key autoincrement not null,
     name text not null,
     description text not null,
     treatment text not null
@@ -190,7 +190,7 @@ create table illnesses_plants (
 -- таблица всех комнат пользователя, которые задаются координатами двух точек - левый верхний угол
 -- и правый нижний
 create table rooms(
-    id integer primary key,
+    id integer primary key autoincrement not null,
     left_up decimal not null,
     right_down decimal not null
 );
@@ -202,7 +202,7 @@ create table rooms(
 --create type works_with_plant as enum ('watering', 'transplant', 'fertilizers', 'loosening', 'spraying');
 
 create table work_enum (
-    id integer primary key,
+    id integer primary key autoincrement not null,
     work varchar(255),
     check (work = 'watering' || work = 'transplant' || work = fertilizers || work = 'loosening' || work = 'spraying')
 );
