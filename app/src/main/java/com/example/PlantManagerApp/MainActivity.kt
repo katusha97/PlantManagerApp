@@ -1,9 +1,11 @@
 package com.example.PlantManagerApp
 
+import android.content.Intent
 import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -40,5 +42,25 @@ class MainActivity : AppCompatActivity() {
             cursor.close()
             textView.text = language
         }
+    }
+
+    fun to_today (view: View) {
+        val TodayIntent = Intent(this, TodayActivity::class.java)
+        startActivity(TodayIntent)
+    }
+
+    fun to_calendar (view: View) {
+        val CalendarIntent = Intent(this, CalendarActivity::class.java)
+        startActivity(CalendarIntent)
+    }
+
+    fun to_list_of_your_plants(view: View) {
+        val ListOfYourPlantsIntent = Intent(this, ListOfYourPlantsActivity::class.java)
+        startActivity(ListOfYourPlantsIntent)
+    }
+
+    fun to_show_your_map(view: View) {
+        val ShowYourMapIntent = Intent(this, ShowYourMapActivity::class.java)
+        startActivity(ShowYourMapIntent)
     }
 }
