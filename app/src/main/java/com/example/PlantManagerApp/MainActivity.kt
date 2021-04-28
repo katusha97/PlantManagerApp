@@ -63,4 +63,14 @@ class MainActivity : AppCompatActivity() {
         val ShowYourMapIntent = Intent(this, ShowYourMapActivity::class.java)
         startActivity(ShowYourMapIntent)
     }
+
+    fun to_settings (view: View) {
+        val SettingsIntent = Intent(this, SettingsActivity::class.java)
+        startActivity(SettingsIntent)
+    }
+
+    fun to_help(view: View) {
+        val HelpIntent = Intent(this, HelpActivity::class.java)
+        startActivity(HelpIntent)
+    }
 }

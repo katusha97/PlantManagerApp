@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PlantManagerApp">
-        <activity android:name=".ShowYourMapActivity"></activity>
+        <activity android:name=".AboutThisAppActivity"></activity>
+        <activity android:name=".SuggestionActivity" />
+        <activity android:name=".ReportAProblemActivity" />
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ShowYourMapActivity" />
         <activity android:name=".ListOfYourPlantsActivity" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".TodayActivity" />
