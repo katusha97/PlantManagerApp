@@ -1,0 +1,5 @@
+package dataBaseModule
+
+class Characteristics {
+
+}
