@@ -10,8 +10,8 @@ class DBCreate {
             "create table user_app (\n" +
             "    name varchar(255) not null,\n" +
             "    email varchar(255) unique not null,\n" +
-            "    birthday date,\n" +
-            "    notification_time DateTime default '10:00:00',\n" +
+            "    birthday text,\n" +
+            "    notification_time text default '10:00:00',\n" +
             "    every_X_minute int not null default 30,\n" +
             "    language_id integer not null references language(id) default 1\n" +
             ");\n" +
@@ -56,8 +56,6 @@ class DBCreate {
             "    temperature_up int not null, -- верхний предел температуры\n" +
             "    temperature_down int not null, -- нижний предел температуры\n" +
             "    humidity_description int not null, -- 0: любит сухость, 1: неприхотливое, 2: любит влажность\n" +
-            "    humidity_up int not null, -- верхний предел влажности\n" +
-            "    humidity_down int not null, -- нижний предел влажности\n" +
             "    pot_size int, -- 0: любит тесноту, 1: неприхотливое, 2: любит много места\n" +
             "    check (light >= 0 and light <= 4),\n" +
             "    check (temperature_up > temperature_down),\n" +
@@ -82,9 +80,9 @@ class DBCreate {
             "    plant_id int not null references plants(id),\n" +
             "    name varchar(255) unique not null,\n" +
             "    room_id int not null references rooms(id),\n" +
-            "    watering_day date not null,\n" +
-            "    transplant_day date not null,\n" +
-            "    fertilization_day date not null,\n" +
+            "    watering_day text  not null,\n" +
+            "    transplant_day text  not null,\n" +
+            "    fertilization_day text  not null,\n" +
             "    period_id integer references period_of_life(id),\n" +
             "    coord_x decimal not null,\n" +
             "    coord_y decimal not null,\n" +
@@ -211,11 +209,11 @@ class DBCreate {
             ");\n" +
             "\n" +
             "create table calendar (\n" +
-            "    day date not null,\n" +
+            "    day text  not null,\n" +
             "    plant_id integer not null references plants_of_user(id),\n" +
             "    work_id int not null references work_enum(id),\n" +
             "    status int not null default 0,\n" +
             "    check (status = 1 or status = 0), -- 1 - дело сделано, -- 0 - дело не сделано\n" +
-            "    primary key(date, plant_id, work)\n" +
+            "    primary key(day, plant_id, work)\n" +
             ");"
 }

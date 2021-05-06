@@ -7,8 +7,8 @@ create table language (
 create table user_app (
     name varchar(255) not null,
     email varchar(255) unique not null,
-    birthday date,
-    notification_time DateTime default '10:00:00',
+    birthday text,
+    notification_time text default '10:00:00',
     every_X_minute int not null default 30,
     language_id integer not null references language(id) default 1
 );
@@ -53,8 +53,8 @@ create table characteristics_by_period (
     temperature_up int not null, -- верхний предел температуры
     temperature_down int not null, -- нижний предел температуры
     humidity_description int not null, -- 0: любит сухость, 1: неприхотливое, 2: любит влажность
-    humidity_up int not null, -- верхний предел влажности
-    humidity_down int not null, -- нижний предел влажности
+--    humidity_up int not null, -- верхний предел влажности
+--    humidity_down int not null, -- нижний предел влажности
     pot_size int, -- 0: любит тесноту, 1: неприхотливое, 2: любит много места
     check (light >= 0 and light <= 4),
     check (temperature_up > temperature_down),
@@ -79,9 +79,9 @@ create table plants_of_user (
     plant_id int not null references plants(id),
     name varchar(255) unique not null,
     room_id int not null references rooms(id),
-    watering_day date not null,
-    transplant_day date not null,
-    fertilization_day date not null,
+    watering_day text  not null,
+    transplant_day text  not null,
+    fertilization_day text  not null,
     period_id integer references period_of_life(id),
     coord_x decimal not null,
     coord_y decimal not null,
@@ -208,10 +208,10 @@ create table work_enum (
 );
 
 create table calendar (
-    day date not null,
+    day text  not null,
     plant_id integer not null references plants_of_user(id),
     work_id int not null references work_enum(id),
     status int not null default 0,
     check (status = 1 or status = 0), -- 1 - дело сделано, -- 0 - дело не сделано
-    primary key(date, plant_id, work)
+    primary key(day, plant_id, work)
 );

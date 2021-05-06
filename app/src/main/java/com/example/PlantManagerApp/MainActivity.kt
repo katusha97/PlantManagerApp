@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import dataBaseModule.DatabaseHandlerImpl
 import dataBaseModule.DatabaseHelper
 
 
@@ -32,15 +33,10 @@ class MainActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.button)
         val textView = findViewById<TextView>(R.id.textView)
 
+        val handler = DatabaseHandlerImpl(this)
         button.setOnClickListener {
-            var language = ""
-            val cursor: Cursor = mDb!!.rawQuery("SELECT * FROM language", null)
-            while (cursor.moveToNext()) {
-                val curr: String = cursor.getString(cursor.getColumnIndex("name"))
-                language += "$curr | "
-            }
-            cursor.close()
-            textView.text = language
+            val id = handler.getLanguageId("russian")
+            textView.text = id.toString()
         }
     }
 
