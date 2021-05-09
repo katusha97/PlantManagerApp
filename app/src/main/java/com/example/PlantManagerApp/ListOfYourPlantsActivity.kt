@@ -1,14 +1,17 @@
 package com.example.PlantManagerApp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import dataBaseModule.DatabaseHandlerImpl
+import androidx.appcompat.app.AppCompatActivity
+import java.util.*
+
 
 class ListOfYourPlantsActivity : AppCompatActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -19,15 +22,21 @@ class ListOfYourPlantsActivity : AppCompatActivity() {
 
         val arrayAdapter: ArrayAdapter<*>
         val users = listOf(
-            "violet", "cactus", "aloe"
+                "violet", "cactus", "aloe"
         )
 
 
 
         var mListView = findViewById<ListView>(R.id.userlist)
         arrayAdapter = ArrayAdapter(this,
-            android.R.layout.simple_list_item_1, users)
+                android.R.layout.simple_list_item_1, users)
         mListView.adapter = arrayAdapter
-    }
 
+        mListView.setOnItemClickListener { parent, view, position, id ->
+            val element = arrayAdapter.getItem(position)
+            val intent = Intent(this, DeletePlantActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
 }
