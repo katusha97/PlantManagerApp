@@ -30,14 +30,14 @@ class MainActivity : AppCompatActivity() {
             throw mSQLException
         }
 
-        val button = findViewById<Button>(R.id.button)
-        val textView = findViewById<TextView>(R.id.textView)
-
-        val handler = DatabaseHandlerImpl(this)
-        button.setOnClickListener {
-            val id = handler.getLanguageId("russian")
-            textView.text = id.toString()
-        }
+//        val button = findViewById<Button>(R.id.button)
+//        val textView = findViewById<TextView>(R.id.textView)
+//
+//        val handler = DatabaseHandlerImpl(this)
+//        button.setOnClickListener {
+//            val id = handler.getLanguageId("russian")
+//            textView.text = id.toString()
+//        }
     }
 
     fun to_today (view: View) {

@@ -5,14 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 
-class SuggestionActivity : AppCompatActivity() {
+class PlantFertilizationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_suggestion)
+        setContentView(R.layout.activity_plant_fertilization)
     }
 
-    fun to_help(view: View) {
-        val HelpIntent = Intent(this, HelpActivity::class.java)
-        startActivity(HelpIntent)
+    fun to_today(view: View) {
+        val TodayIntent = Intent(this, TodayActivity::class.java)
+        startActivity(TodayIntent)
     }
 }
