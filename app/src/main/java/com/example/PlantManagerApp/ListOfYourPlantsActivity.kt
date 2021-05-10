@@ -8,6 +8,7 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import dataBaseModule.DatabaseHandlerImpl
 import java.util.*
 
 
@@ -22,7 +23,7 @@ class ListOfYourPlantsActivity : AppCompatActivity() {
 
         val arrayAdapter: ArrayAdapter<*>
         val users = listOf(
-                "violet", "cactus", "aloe"
+                "Азалия", "Каланхоэ", "Герань", "Фиалка"
         )
 
 
@@ -35,8 +36,10 @@ class ListOfYourPlantsActivity : AppCompatActivity() {
         mListView.setOnItemClickListener { parent, view, position, id ->
             val element = arrayAdapter.getItem(position)
             val intent = Intent(this, DeletePlantActivity::class.java)
+            intent.putExtra("KEY",element);
             startActivity(intent)
         }
+
 
     }
 }
