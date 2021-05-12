@@ -7,7 +7,7 @@
     tools:context=".AboutThisAppActivity">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textViewAbout"
         android:layout_width="251dp"
         android:layout_height="244dp"
         android:text="Some information"

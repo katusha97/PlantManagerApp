@@ -14,9 +14,9 @@ class CalendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
 
-        //val handler = DatabaseHandlerImpl(this)
-        //val calendar = findViewById<CalendarView>(R.id.calendarView)
-        //val dataList = handler.getAllWorkForDay(calendar.date.toString())
+        val handler = DatabaseHandlerImpl(this)
+        val calendar = findViewById<CalendarView>(R.id.calendarView)
+//        val dataList = handler.getAllWorkForDay(calendar.date.toString())
 
         val textView = findViewById<TextView>(R.id.textView)
         textView.text = ""

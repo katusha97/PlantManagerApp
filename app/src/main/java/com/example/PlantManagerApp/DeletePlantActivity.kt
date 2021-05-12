@@ -15,7 +15,7 @@ class DeletePlantActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_delete_plant)
 
-//        val handler = DatabaseHandlerImpl(this)
+        val handler = DatabaseHandlerImpl(this)
         val textView = findViewById<TextView>(R.id.textView_info)
 
         val extras = intent.extras
@@ -23,7 +23,7 @@ class DeletePlantActivity : AppCompatActivity() {
             val value = extras.getString("KEY")
             textView.append(value)
             textView.append(": ")
-//            textView.append(handler.getDescription(value.toString()))
+            textView.append(handler.getDescription(value.toString())) //тут фиксированный ответ
         }
 
         var button = findViewById(R.id.button_yes) as Button
