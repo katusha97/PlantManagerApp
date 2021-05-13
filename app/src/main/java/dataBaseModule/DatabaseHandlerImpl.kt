@@ -241,6 +241,12 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
     }
 
     @SuppressLint("Recycle")
+    override fun getPlantNameById(id: Int): String {
+        val cursor = dbRead.rawQuery("SELECT id from plants_of_user WHERE id = id", null)
+        return cursor.getColumnName(cursor.getColumnIndex("name"))
+    }
+
+    @SuppressLint("Recycle")
     override fun getWorkId(work: String): Int {
         val cursor = dbRead.rawQuery("SELECT id from work_enum WHERE work = \"$work\"", null)
         return cursor.getColumnIndex("id")

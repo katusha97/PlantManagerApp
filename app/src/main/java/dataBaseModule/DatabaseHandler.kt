@@ -1,5 +1,7 @@
 package dataBaseModule
 
+import android.annotation.SuppressLint
+
 interface DatabaseHandler {
     fun addRoom (left_up: Double, right_down: Double)
     fun addPlant (plant_id: Int, name: String, room_id: Int, watering_day: String,
@@ -33,4 +35,5 @@ interface DatabaseHandler {
     fun getWorkId(work: String): Int
     fun getLanguageId(language_name: String): Int
     fun getPlantId(name: String): Int
+    fun getPlantNameById(id: Int): String
 }
