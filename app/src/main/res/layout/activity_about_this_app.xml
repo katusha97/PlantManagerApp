@@ -7,7 +7,7 @@
     tools:context=".AboutThisAppActivity">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textViewAbout"
         android:layout_width="251dp"
         android:layout_height="244dp"
         android:text="Some information"
@@ -16,4 +16,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.297" />
+
+    <Button
+        android:onClick="to_help"
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.043" />
 </androidx.constraintlayout.widget.ConstraintLayout>

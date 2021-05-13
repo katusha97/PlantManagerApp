@@ -4,52 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HelpActivity">
+    tools:context=".DeletePlantActivity">
 
-    <Button
-        android:onClick="to_report_a_problem"
-        android:id="@+id/button8"
-        android:layout_width="191dp"
-        android:layout_height="67dp"
-        android:text="Report a problem"
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="124dp"
+        android:layout_height="60dp"
+        android:text="Do you want to delete this plant?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.21" />
+        app:layout_constraintVertical_bias="0.59" />
 
     <Button
-        android:onClick="to_suggestion"
-        android:id="@+id/button9"
-        android:layout_width="191dp"
-        android:layout_height="67dp"
-        android:text="Suggestion"
+        android:id="@+id/button_yes"
+        android:layout_width="82dp"
+        android:layout_height="57dp"
+        android:text="Yes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.291"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382" />
+        app:layout_constraintVertical_bias="0.836" />
 
     <Button
-        android:onClick="to_about_this_app"
-        android:id="@+id/button10"
-        android:layout_width="191dp"
-        android:layout_height="67dp"
-        android:text="About this app"
+        android:id="@+id/button_no"
+        android:layout_width="82dp"
+        android:layout_height="57dp"
+        android:onClick="to_list_of_your_plants"
+        android:text="No"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.72"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.554" />
+        app:layout_constraintVertical_bias="0.836" />
 
     <Button
-        android:id="@+id/button16"
+        android:onClick="to_list_of_your_plants"
+        android:id="@+id/button31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="to_main"
         android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,4 +55,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.043" />
+
+    <TextView
+        android:id="@+id/textView_info"
+        android:layout_width="252dp"
+        android:layout_height="238dp"
+        android:text="Information about "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.243" />
 </androidx.constraintlayout.widget.ConstraintLayout>
