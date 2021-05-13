@@ -18,19 +18,24 @@ class ListOfYourPlantsActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_list_of_your_plants)
 
-//        val handler = DatabaseHandlerImpl(this)
-//        val users = handler.getAllPlantsOfUser()
+        val handler = DatabaseHandlerImpl(this)
+        val users = handler.getAllPlantsOfUser()
 
         val arrayAdapter: ArrayAdapter<*>
-        val users = listOf(
-                "Азалия", "Каланхоэ", "Герань", "Фиалка"
-        )
+//        val users = listOf(
+//                "Азалия", "Каланхоэ", "Герань", "Фиалка"
+//        )
 
+        val names = arrayListOf<String>()
+
+        for (item in users){
+            names.add(item.name)
+        }
 
 
         var mListView = findViewById<ListView>(R.id.userlist)
         arrayAdapter = ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, users)
+                android.R.layout.simple_list_item_1, names)
         mListView.adapter = arrayAdapter
 
         mListView.setOnItemClickListener { parent, view, position, id ->
@@ -41,5 +46,10 @@ class ListOfYourPlantsActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    fun to_main(view: View) {
+        val MainIntent = Intent(this, MainActivity::class.java)
+        startActivity(MainIntent)
     }
 }

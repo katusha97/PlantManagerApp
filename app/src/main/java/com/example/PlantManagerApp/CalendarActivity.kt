@@ -16,16 +16,21 @@ class CalendarActivity : AppCompatActivity() {
 
         val handler = DatabaseHandlerImpl(this)
         val calendar = findViewById<CalendarView>(R.id.calendarView)
-//        val dataList = handler.getAllWorkForDay(calendar.date.toString())
-
-        val textView = findViewById<TextView>(R.id.textView)
+        val dataList = handler.getAllWorkForDay(calendar.date.toString())
+        var textView = findViewById<TextView>(R.id.textView)
         textView.text = ""
+//        for (data in dataList) {
+//            val id = data.plant_id
+//            val name: String = handler.getPlantName(id)
+//            textView.append("Полить $name")
+//        }
 
-        val dataList = arrayOf("a", "b", "c", "d", "e")
-        for (item in dataList){
-            textView.append(item)
-            textView.append("\n")
-        }
+
+//        val dataList = arrayOf("a", "b", "c", "d", "e")
+//        for (item in dataList){
+//            textView.append(item)
+//            textView.append("\n")
+//        }
     }
 
     fun to_main(view: View) {
