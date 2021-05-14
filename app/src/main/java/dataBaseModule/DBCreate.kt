@@ -101,7 +101,7 @@ class DBCreate {
             plant_id int not null references plants(id),
             every_X_day int not null,
             description text,
-            irrigation_power_id integer not null references irrigation_power_enum(id) default 1,
+            irrigation_power_id integer not null references irrigation_power_enum(id) default 2,
             primary key(plant_id)
         );
         
@@ -119,6 +119,7 @@ class DBCreate {
             plant_id int not null references plants(id),
             every_X_day int not null,
             irrigation_power_id integer not null references irrigation_power_enum(id) default 1,
+            description text,
             primary key(plant_id)
         );
         
@@ -134,7 +135,6 @@ class DBCreate {
         -- таблица, в которой содержится информация о пересадке растений и какую почву использовать и как часто пересаживать
         create table plant_transplant (
             plant_id int not null references plants(id),
-            soil_id int not null references soil(id),
             every_X_month int not null,
             description text,
             primary key(plant_id)
@@ -152,7 +152,6 @@ class DBCreate {
             plant_id int not null references plants(id),
             fertilizer_id int not null references fertilizers(id),
             every_X_month int not null,
-            description text,
             primary key(plant_id, fertilizer_id)
         );
         
@@ -160,7 +159,6 @@ class DBCreate {
         create table plant_loosening (
             plant_id int not null references plants(id),
             every_X_day int not null,
-            description text,
             primary key(plant_id)
         );
         
@@ -168,7 +166,6 @@ class DBCreate {
         create table plant_spraying (
             plant_id int not null references plants(id),
             every_X_day int not null,
-            description text,
             primary key(plant_id)
         );
         
