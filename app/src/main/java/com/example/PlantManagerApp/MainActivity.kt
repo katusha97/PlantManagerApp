@@ -1,12 +1,10 @@
 package com.example.PlantManagerApp
 
 import android.content.Intent
-import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import dataBaseModule.DatabaseHandlerImpl
@@ -21,23 +19,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         mDBHelper = DatabaseHelper(this)
-        val view = setContentView(R.layout.activity_main)
-
         mDb = try {
-            mDBHelper!!.readableDatabase
+            mDBHelper!!.writableDatabase
         } catch (mSQLException: SQLException) {
             throw mSQLException
         }
-
-//        val button = findViewById<Button>(R.id.button)
-//        val textView = findViewById<TextView>(R.id.textView)
-//
-//        val handler = DatabaseHandlerImpl(this)
-//        button.setOnClickListener {
-//            val id = handler.getLanguageId("russian")
-//            textView.text = id.toString()
-//        }
     }
 
     fun to_today (view: View) {

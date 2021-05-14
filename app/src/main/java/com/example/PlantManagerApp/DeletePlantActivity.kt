@@ -19,16 +19,18 @@ class DeletePlantActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textView_info)
 
         val extras = intent.extras
+        var value = ""
         if (extras != null) {
-            val value = extras.getString("KEY")
+            value = extras.getString("KEY").toString()
             textView.append(value)
             textView.append(": ")
-            textView.append(handler.getDescription(value.toString())) //тут фиксированный ответ
+            textView.append(handler.getDescription(value)) //тут фиксированный ответ
         }
 
-        var button = findViewById(R.id.button_yes) as Button
+        val button = findViewById(R.id.button_yes) as Button
 
         button.setOnClickListener {
+//            handler.removePlant(value)
             val toast = Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)
             toast.setGravity(Gravity.TOP, 0, 1150)
             toast.show()
