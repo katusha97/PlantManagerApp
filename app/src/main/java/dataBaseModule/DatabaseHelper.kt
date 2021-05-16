@@ -15,12 +15,12 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, dbName, null,
 
     private lateinit var context: Context
 
-//    fun DatabaseHelper(context: Context?) {
-//        if (context == null) {
-//            throw RuntimeException("context not found")
-//        }
-//            this.context = context
-//    }
+    fun DatabaseHelper(context: Context?) {
+        if (context == null) {
+            throw RuntimeException("context not found")
+        }
+            this.context = context
+    }
 
     fun exec(query: String, db: SQLiteDatabase) {
         try {

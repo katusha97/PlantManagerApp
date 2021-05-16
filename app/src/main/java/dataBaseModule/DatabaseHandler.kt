@@ -23,12 +23,14 @@ interface DatabaseHandler {
     fun getPlant(name: String): Plant
     fun getAllRooms (): List<Room>
     fun getAllPlantsOfUser (): List<Plant>
+    fun getAllNameOfPlant (): List<String>
     fun getAllPlantByRoom (room_id: Int): List<Plant>
     fun getDescription (name: String): String
     fun getNotifTime (): String
     fun getLanguage (): String
     fun getAllWorkForDay (date: String): List <Work>
     fun getPeriodOfLife (name: String): String
+    fun getAllPeriodOfLife(): List<String>
     fun getSeason(): String
     fun getCharctOfPlant (name: String, period_of_life: Int, season: String): List<Characteristics>
     fun getPeriodId(name: String): Int

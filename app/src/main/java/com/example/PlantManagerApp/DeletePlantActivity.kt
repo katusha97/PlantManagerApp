@@ -30,7 +30,7 @@ class DeletePlantActivity : AppCompatActivity() {
         val button = findViewById(R.id.button_yes) as Button
 
         button.setOnClickListener {
-//            handler.removePlant(value)
+            handler.removePlant(value)
             val toast = Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)
             toast.setGravity(Gravity.TOP, 0, 1150)
             toast.show()

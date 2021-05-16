@@ -3,7 +3,6 @@ package dataBaseModule
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import java.util.*
 
@@ -161,6 +160,16 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
     }
 
     @SuppressLint("Recycle")
+    override fun getAllNameOfPlant(): List<String> {
+        val cursor = dbRead.rawQuery("SELECT name from plant", null)
+        val listOfName = ArrayList<String>()
+        while (cursor.moveToNext()) {
+            listOfName.add(cursor.getString(cursor.getColumnIndex("name")))
+        }
+        return listOfName
+    }
+
+    @SuppressLint("Recycle")
     override fun getAllPlantByRoom(room_id: Int): List<Plant> {
         val cursor = dbRead.rawQuery("SELECT * FROM plants_of_user WHERE room_id = $room_id", null)
         val listOfPlants = ArrayList<Plant>()
@@ -241,6 +250,16 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
         )
         cursor.moveToFirst()
         return cursor.getString(cursor.getColumnIndex("name"))
+    }
+
+    @SuppressLint("Recycle")
+    override fun getAllPeriodOfLife(): List<String> {
+        val cursor = dbRead.rawQuery("SELECT name from period_of_life", null)
+        val listOfPeriod = ArrayList<String>()
+        while (cursor.moveToNext()) {
+            listOfPeriod.add(cursor.getString(cursor.getColumnIndex("name")))
+        }
+        return listOfPeriod
     }
 
     override fun getSeason(): String {
