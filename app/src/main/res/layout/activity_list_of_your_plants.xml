@@ -7,8 +7,21 @@
         android:layout_height="wrap_content" android:id="@+id/testbutton"
         android:text="BACK" android:layout_alignParentBottom="true" />
 
-    <ListView android:layout_width="fill_parent"
-        android:layout_height="fill_parent" android:id="@+id/userlist"
-        android:layout_alignParentTop="true" android:layout_above="@id/testbutton" />
+    <Button
+        android:id="@+id/testbutton1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="65dp"
+        android:onClick="to_add_plant"
+        android:text="ADD PLANT" />
+
+    <ListView
+        android:id="@+id/userlist"
+        android:layout_width="match_parent"
+        android:layout_height="596dp"
+        android:layout_above="@id/testbutton"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="87dp" />
 
 </RelativeLayout>

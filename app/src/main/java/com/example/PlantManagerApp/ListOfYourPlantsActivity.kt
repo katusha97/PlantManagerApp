@@ -63,4 +63,9 @@ class ListOfYourPlantsActivity : AppCompatActivity() {
         val MainIntent = Intent(this, MainActivity::class.java)
         startActivity(MainIntent)
     }
+
+    fun to_add_plant(view: View) {
+        val AddPlantIntent = Intent(this, AddPlantActivity::class.java)
+        startActivity(AddPlantIntent)
+    }
 }
