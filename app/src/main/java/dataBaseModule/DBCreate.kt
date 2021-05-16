@@ -77,9 +77,8 @@ class DBCreate {
         
         -- таблица, из которой можно получить все его растения
         create table plants_of_user (
-            id integer primary key autoincrement not null,
             plant_id int not null references plants(id),
-            name text unique not null,
+            name text primary key not null,
             room_id int not null references rooms(id),
             watering_day text  not null,
             transplant_day text  not null,

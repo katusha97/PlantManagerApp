@@ -12,10 +12,8 @@ class AboutThisAppActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about_this_app)
 
-        val handler = DatabaseHandlerImpl(this)
         val textView = findViewById<TextView>(R.id.textViewAbout)
-        handler.getDescription("about").also { textView.text = it } //потому что нет функции, где будет инфа о приложении
-        //поэтому воспользовалась своей, которая возвращает фиксированное значение для растения
+        textView.text = "Это приложение - учебный проект от Computer Science Center, магистерской программы JetBrains и ИТМО и Яндекс"
     }
 
     fun to_help(view: View) {

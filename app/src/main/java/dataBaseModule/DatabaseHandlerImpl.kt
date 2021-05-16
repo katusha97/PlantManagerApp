@@ -161,7 +161,7 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
 
     @SuppressLint("Recycle")
     override fun getAllNameOfPlant(): List<String> {
-        val cursor = dbRead.rawQuery("SELECT name from plant", null)
+        val cursor = dbRead.rawQuery("SELECT name from plants", null)
         val listOfName = ArrayList<String>()
         while (cursor.moveToNext()) {
             listOfName.add(cursor.getString(cursor.getColumnIndex("name")))
@@ -193,7 +193,7 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
 
     @SuppressLint("Recycle")
     override fun getDescription(name: String): String {
-        val id = getPlantId(name)
+        val id = getPlantIdByClientName(name)
         val cursor = dbRead.rawQuery("SELECT description FROM plants WHERE id = $id", null)
         cursor.moveToFirst()
         return cursor.getString(cursor.getColumnIndex("description"))
@@ -290,6 +290,13 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
 
     @SuppressLint("Recycle")
     override fun getPlantId(name: String): Int {
+        val cursor = dbRead.rawQuery("SELECT id from plants WHERE name = \"$name\"", null)
+        cursor.moveToFirst()
+        return cursor.getInt(0)
+    }
+
+    @SuppressLint("Recycle")
+    override fun getPlantIdByClientName(name: String): Int {
         val cursor = dbRead.rawQuery("SELECT plant_id from plants_of_user WHERE name = \"$name\"", null)
         cursor.moveToFirst()
         return cursor.getInt(0)

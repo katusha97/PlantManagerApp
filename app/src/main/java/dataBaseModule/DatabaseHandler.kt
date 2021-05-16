@@ -37,5 +37,6 @@ interface DatabaseHandler {
     fun getWorkId(work: String): Int
     fun getLanguageId(language_name: String): Int
     fun getPlantId(name: String): Int
+    fun getPlantIdByClientName(name: String): Int
     fun getPlantNameById(id: Int): String
 }
