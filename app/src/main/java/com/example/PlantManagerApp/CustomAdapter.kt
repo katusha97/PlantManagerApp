@@ -7,8 +7,13 @@ import android.widget.CheckBox
 import android.widget.TextView
 import app.com.q3.DataModel
 import com.example.PlantManagerApp.R
+import dataBaseModule.DatabaseHandlerImpl
+import dataBaseModule.WorkType
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
-class CustomAdapter(private val dataSet: ArrayList<*>, mContext: Context) :
+
+class CustomAdapter(private val dataSet: ArrayList<*>, val work_type: WorkType, mContext: Context) :
         ArrayAdapter<Any?>(mContext, R.layout.row_item, dataSet) {
     private class ViewHolder {
         lateinit var txtName: TextView
@@ -36,6 +41,17 @@ class CustomAdapter(private val dataSet: ArrayList<*>, mContext: Context) :
                     convertView.findViewById(R.id.txtName)
             viewHolder.checkBox =
                     convertView.findViewById(R.id.checkBox)
+            viewHolder.checkBox.setOnClickListener {
+                val handler = DatabaseHandlerImpl(context)
+                val dataModel: DataModel = getItem(position)
+                dataModel.checked = !dataModel.checked
+                val dtime = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+                if (dataModel.checked) {
+                    handler.removeWork(dtime, dataModel.name, work_type)
+                } else {
+                    handler.addWork(dtime, dataModel.name, work_type)
+                }
+            }
             result = convertView
             convertView.tag = viewHolder
         } else {

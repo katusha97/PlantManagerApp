@@ -2,39 +2,44 @@ package com.example.PlantManagerApp
 
 import CustomAdapter
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
+import androidx.annotation.RequiresApi
 import app.com.q3.DataModel
+import dataBaseModule.DatabaseHandlerImpl
+import dataBaseModule.WorkType
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class PlantTransplantActivity : AppCompatActivity() {
 
-    private var dataModel: ArrayList<DataModel>? = null
+    private var dataModel: ArrayList<DataModel> = mutableListOf<DataModel>() as ArrayList<DataModel>
     private lateinit var listView: ListView
     private lateinit var adapter: CustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_transplant)
+        val handler = DatabaseHandlerImpl(this)
 
         title = "Plant transplant"
         listView = findViewById<View>(R.id.listView) as ListView
-        dataModel = ArrayList<DataModel>()
-        dataModel!!.add(DataModel("Азалия", false))
-        dataModel!!.add(DataModel("Каланхоэ", false))
-        dataModel!!.add(DataModel("Герань", false))
-        dataModel!!.add(DataModel("Фиалка", true))
+        val dtime = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+        val listOfWork =
+            handler.getAllWorkForDay(dtime)
 
-        adapter = CustomAdapter(dataModel!!, applicationContext)
-        listView.adapter = adapter
-        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            val dataModel: DataModel = dataModel!![position] as DataModel
-            dataModel.checked = !dataModel.checked
-            adapter.notifyDataSetChanged()
+        for (work in listOfWork) {
+            if (work.work_type == WorkType.TRANSPLANT) {
+                dataModel.add(DataModel(work.plant_name, false))
+            }
         }
 
+        adapter = CustomAdapter(dataModel, WorkType.TRANSPLANT, applicationContext)
+        listView.adapter = adapter
     }
 
     fun to_today(view: View) {

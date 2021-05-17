@@ -3,6 +3,7 @@ package dataBaseModule
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import java.util.*
 
@@ -30,6 +31,11 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
         )
     }
 
+    override fun addWork(date: String, plant_name: String, work_type: WorkType) {
+        dbWrite.execSQL(
+            "INSERT INTO calendar VALUES (\"${date}\", \"${plant_name}\", ${work_type.ordinal})")
+    }
+
     override fun removeRoom(room_id: Int) {
         dbWrite.delete("rooms", "room_id = $room_id", null)
     }
@@ -38,10 +44,11 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
         dbWrite.delete("plants_of_user", "name = \"$name\"", null)
     }
 
-    override fun removeWork(date: String, work_id: Int, plant_id: Int) {
+    override fun removeWork(date: String, plant_name: String, work_type: WorkType) {
         dbWrite.delete(
             "calendar",
-            "date = \"$date\" and work_id = $work_id and plant_id = $plant_id",
+            "day = \"$date\" and work_id = ${work_type.ordinal} " +
+                    "and plant_name = \"$plant_name\"",
             null
         )
     }
@@ -85,23 +92,13 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
         dbWrite.update("plants_of_user", values, "name = \"$name\"", null)
     }
 
-    override fun updateDateOfWork(date: String, plant_id: Int, work_id: Int, new_date: String) {
+    override fun updateDateOfWork(date: String, plant_name: String, work_type: WorkType, new_date: String) {
         val values = ContentValues().apply {
             put("new_date", new_date)
         }
         dbWrite.update(
             "calendar", values, "day = \"$date\" and " +
-                    "plant_id = $plant_id and work_id = $work_id", null
-        )
-    }
-
-    override fun updateStatusOfWork(date: String, plant_id: Int, work_id: Int, new_status: Int) {
-        val values = ContentValues().apply {
-            put("new_status", new_status)
-        }
-        dbWrite.update(
-            "calendar", values, "day = \"$date\" and " +
-                    "plant_id = $plant_id and work_id = $work_id", null
+                    "plant_id = $plant_name and work_id = ${work_type.ordinal}", null
         )
     }
 
@@ -111,11 +108,11 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
         return Plant(
             cursor.getString(cursor.getColumnIndex("plant_id")),
             cursor.getString(cursor.getColumnIndex("name")),
-            cursor.getColumnIndex("room_id"),
+            cursor.getInt(cursor.getColumnIndex("room_id")),
             cursor.getString(cursor.getColumnIndex("watering_day")),
             cursor.getString(cursor.getColumnIndex("transplant_day")),
             cursor.getString(cursor.getColumnIndex("fertilization_day")),
-            cursor.getColumnIndex("period_id"),
+            cursor.getInt(cursor.getColumnIndex("period_id")),
             cursor.getString(cursor.getColumnIndex("coord_x")).toDouble(),
             cursor.getString(cursor.getColumnIndex("coord_y")).toDouble()
         )
@@ -128,7 +125,7 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
         while (cursor.moveToNext()) {
             listOfRoom.add(
                 Room(
-                    cursor.getColumnIndex("id"),
+                    cursor.getInt(cursor.getColumnIndex("id")),
                     cursor.getDouble(cursor.getColumnIndex("left_up")),
                     cursor.getDouble(cursor.getColumnIndex("right_down"))
                 )
@@ -146,11 +143,11 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
                 Plant(
                     cursor.getString(cursor.getColumnIndex("plant_id")),
                     cursor.getString(cursor.getColumnIndex("name")),
-                    cursor.getColumnIndex("room_id"),
+                    cursor.getInt(cursor.getColumnIndex("room_id")),
                     cursor.getString(cursor.getColumnIndex("watering_day")),
                     cursor.getString(cursor.getColumnIndex("transplant_day")),
                     cursor.getString(cursor.getColumnIndex("fertilization_day")),
-                    cursor.getColumnIndex("period_id"),
+                    cursor.getInt(cursor.getColumnIndex("period_id")),
                     cursor.getString(cursor.getColumnIndex("coord_x")).toDouble(),
                     cursor.getString(cursor.getColumnIndex("coord_y")).toDouble()
                 )
@@ -178,11 +175,11 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
                 Plant(
                     cursor.getString(cursor.getColumnIndex("plant_id")),
                     cursor.getString(cursor.getColumnIndex("name")),
-                    cursor.getColumnIndex("room_id"),
+                    cursor.getInt(cursor.getColumnIndex("room_id")),
                     cursor.getString(cursor.getColumnIndex("watering_day")),
                     cursor.getString(cursor.getColumnIndex("transplant_day")),
                     cursor.getString(cursor.getColumnIndex("fertilization_day")),
-                    cursor.getColumnIndex("period_id"),
+                    cursor.getInt(cursor.getColumnIndex("period_id")),
                     cursor.getString(cursor.getColumnIndex("coord_x")).toDouble(),
                     cursor.getString(cursor.getColumnIndex("coord_y")).toDouble()
                 )
@@ -198,11 +195,6 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
         cursor.moveToFirst()
         return cursor.getString(cursor.getColumnIndex("description"))
     }
-
-//    @SuppressLint("Recycle")
-//    override fun getDescription(name: String): String {
-//        return "This is really good!"
-//    }
 
     @SuppressLint("Recycle")
     override fun getNotifTime(): String {
@@ -230,9 +222,8 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
             listOfWork.add(
                 Work(
                     cursor.getString(cursor.getColumnIndex("day")),
-                    cursor.getColumnIndex("plant_id"),
-                    cursor.getColumnIndex("work_id"),
-                    cursor.getColumnIndex("status")
+                    cursor.getString(cursor.getColumnIndex("plant_name")),
+                    WorkType.values()[cursor.getInt(cursor.getColumnIndex("work_id"))]
                 )
             )
         }
@@ -246,7 +237,7 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
             dbRead.rawQuery("SELECT period_id FROM plants_of_user WHERE name = \"$name\"", null)
         val cursor = dbRead.rawQuery(
             "SELECT name from period_of_life WHERE id = " +
-                    "${cursor1.getColumnIndex("period_id")}", null
+                    "${cursor1.getInt(cursor1.getColumnIndex("period_id"))}", null
         )
         cursor.moveToFirst()
         return cursor.getString(cursor.getColumnIndex("name"))
@@ -307,6 +298,47 @@ class DatabaseHandlerImpl(private val context: Context) : DatabaseHandler {
         val cursor = dbRead.rawQuery("SELECT id from plants_of_user WHERE id = id", null)
         cursor.moveToFirst()
         return cursor.getColumnName(cursor.getColumnIndex("name"))
+    }
+
+    @SuppressLint("Recycle")
+    override fun getWatering(id: Int, season: Int): Int {
+        val cursor: Cursor
+        when(season) {
+            1 -> cursor = dbRead.rawQuery("SELECT every_X_day from watering_winter WHERE plant_id = $id", null)
+            2 -> cursor = dbRead.rawQuery("SELECT every_X_day from watering_spring WHERE plant_id = $id", null)
+            3 -> cursor = dbRead.rawQuery("SELECT every_X_day from watering_summer WHERE plant_id = $id", null)
+            else -> cursor = dbRead.rawQuery("SELECT every_X_day from watering_fall WHERE plant_id = $id", null)
+        }
+        cursor.moveToFirst()
+        return cursor.getInt(0)
+    }
+
+    @SuppressLint("Recycle")
+    override fun getTransplant(id: Int): Int {
+        val cursor = dbRead.rawQuery("SELECT every_X_month from plant_transplant WHERE plant_id = $id", null)
+        cursor.moveToFirst()
+        return cursor.getInt(0)
+    }
+
+    @SuppressLint("Recycle")
+    override fun getFertilization(id: Int): Int {
+        val cursor = dbRead.rawQuery("SELECT every_X_month from plant_fertilization WHERE plant_id = $id", null)
+        cursor.moveToFirst()
+        return cursor.getInt(0)
+    }
+
+    @SuppressLint("Recycle")
+    override fun getLoosening(id: Int): Int {
+        val cursor = dbRead.rawQuery("SELECT every_X_day from plant_loosening WHERE plant_id = $id", null)
+        cursor.moveToFirst()
+        return cursor.getInt(0)
+    }
+
+    @SuppressLint("Recycle")
+    override fun getSpraying(id: Int): Int {
+        val cursor = dbRead.rawQuery("SELECT every_X_day from plant_spraying WHERE plant_id = $id", null)
+        cursor.moveToFirst()
+        return cursor.getInt(0)
     }
 
     @SuppressLint("Recycle")

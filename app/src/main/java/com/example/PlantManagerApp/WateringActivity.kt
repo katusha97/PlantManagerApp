@@ -8,32 +8,41 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import app.com.q3.DataModel
+import dataBaseModule.DatabaseHandlerImpl
+import dataBaseModule.WorkType
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import kotlin.collections.ArrayList
 
 class WateringActivity : AppCompatActivity() {
 
-    private var dataModel: ArrayList<DataModel>? = null
+    private var dataModel: ArrayList<DataModel> = mutableListOf<DataModel>() as ArrayList<DataModel>
     private lateinit var listView: ListView
     private lateinit var adapter: CustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_watering)
+        val handler = DatabaseHandlerImpl(this)
 
         title = "Watering"
-        listView = findViewById<View>(R.id.listView) as ListView
-        dataModel = ArrayList<DataModel>()
-        dataModel!!.add(DataModel("Азалия", false))
-        dataModel!!.add(DataModel("Каланхоэ", true))
-        dataModel!!.add(DataModel("Герань", false))
-        dataModel!!.add(DataModel("Фиалка", true))
+        listView = findViewById(R.id.listView)
+        val dtime = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+        val listOfWork = handler.getAllWorkForDay(dtime)
 
-        adapter = CustomAdapter(dataModel!!, applicationContext)
-        listView.adapter = adapter
-        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            val dataModel: DataModel = dataModel!![position] as DataModel
-            dataModel.checked = !dataModel.checked
-            adapter.notifyDataSetChanged()
+        for (work in listOfWork) {
+            if (work.work_type == WorkType.WATERING) {
+                dataModel.add(DataModel(work.plant_name, false))
+            }
         }
+
+        if (dataModel.isEmpty()) {
+            return
+        }
+
+        adapter = CustomAdapter(dataModel, WorkType.WATERING, applicationContext)
+        listView.adapter = adapter
+
     }
 
     fun to_today(view: View) {

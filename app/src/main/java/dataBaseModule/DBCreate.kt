@@ -13,7 +13,7 @@ class DBCreate {
             email text unique not null,
             birthday text,
             notification_time text default '10:00:00',
-            every_X_minute int not null default 30,
+            every_X_minute integer not null default 30,
             language_id integer not null references language(id) default 1
         );
         
@@ -48,17 +48,17 @@ class DBCreate {
         );
         
         create table characteristics_by_period (
-            plant_id int not null references plants(id),
-            period_id int not null references period_of_life(id),
-            season_id int not null references season_enum(id),
-            light int not null, -- 0: не любит свет, 1: тенелюбивое, 2: неприхотливое,
+            plant_id integer not null references plants(id),
+            period_id integer not null references period_of_life(id),
+            season_id integer not null references season_enum(id),
+            light integer not null, -- 0: не любит свет, 1: тенелюбивое, 2: неприхотливое,
             -- 3: любит рассеянный свет, 4: любит много света (прямые лучи)
-            temperature_up int not null, -- верхний предел температуры
-            temperature_down int not null, -- нижний предел температуры
-            humidity_description int not null, -- 0: любит сухость, 1: неприхотливое, 2: любит влажность
-        --    humidity_up int not null, -- верхний предел влажности
-        --    humidity_down int not null, -- нижний предел влажности
-            pot_size int, -- 0: любит тесноту, 1: неприхотливое, 2: любит много места
+            temperature_up integer not null, -- верхний предел температуры
+            temperature_down integer not null, -- нижний предел температуры
+            humidity_description integer not null, -- 0: любит сухость, 1: неприхотливое, 2: любит влажность
+        --    humidity_up integer not null, -- верхний предел влажности
+        --    humidity_down integer not null, -- нижний предел влажности
+            pot_size integer, -- 0: любит тесноту, 1: неприхотливое, 2: любит много места
             check (light >= 0 and light <= 4),
             check (temperature_up > temperature_down),
             check (humidity_description >= 0 and humidity_description <= 2),
@@ -71,15 +71,15 @@ class DBCreate {
         
         -- таблица с информацией о том, какая почва подходит для этого растения
         create table soil_for_plant (
-            plant_id int not null references plants(id),
-            soil_id int not null references soil(id)
+            plant_id integer not null references plants(id),
+            soil_id integer not null references soil(id)
         );
         
         -- таблица, из которой можно получить все его растения
         create table plants_of_user (
-            plant_id int not null references plants(id),
+            plant_id integer not null references plants(id),
             name text primary key not null,
-            room_id int not null references rooms(id),
+            room_id integer not null references rooms(id),
             watering_day text  not null,
             transplant_day text  not null,
             fertilization_day text  not null,
@@ -97,8 +97,8 @@ class DBCreate {
         );
         
         create table watering_summer (
-            plant_id int not null references plants(id),
-            every_X_day int not null,
+            plant_id integer not null references plants(id),
+            every_X_day integer not null,
             description text,
             irrigation_power_id integer not null references irrigation_power_enum(id) default 2,
             primary key(plant_id)
@@ -106,8 +106,8 @@ class DBCreate {
         
         -- таблица, в которой содержится информация о поливе растений зимой
         create table watering_winter (
-            plant_id int not null references plants(id),
-            every_X_day int not null,
+            plant_id integer not null references plants(id),
+            every_X_day integer not null,
             irrigation_power_id integer not null references irrigation_power_enum(id) default 1,
             description text,
             primary key(plant_id)
@@ -115,8 +115,8 @@ class DBCreate {
         
         -- таблица, в которой содержится информация о поливе растений осенью
         create table watering_fall (
-            plant_id int not null references plants(id),
-            every_X_day int not null,
+            plant_id integer not null references plants(id),
+            every_X_day integer not null,
             irrigation_power_id integer not null references irrigation_power_enum(id) default 1,
             description text,
             primary key(plant_id)
@@ -124,8 +124,8 @@ class DBCreate {
         
         -- таблица, в которой содержится информация о поливе растений весной
         create table watering_spring (
-            plant_id int not null references plants(id),
-            every_X_day int not null,
+            plant_id integer not null references plants(id),
+            every_X_day integer not null,
             irrigation_power_id integer not null references irrigation_power_enum(id) default 1,
             description text,
             primary key(plant_id)
@@ -133,8 +133,8 @@ class DBCreate {
         
         -- таблица, в которой содержится информация о пересадке растений и какую почву использовать и как часто пересаживать
         create table plant_transplant (
-            plant_id int not null references plants(id),
-            every_X_month int not null,
+            plant_id integer not null references plants(id),
+            every_X_month integer not null,
             description text,
             primary key(plant_id)
         );
@@ -148,23 +148,23 @@ class DBCreate {
         
         -- таблица, в которой содержится информация об удобрении растений и какое удобрение использовать и как часто удобрять
         create table plant_fertilization (
-            plant_id int not null references plants(id),
-            fertilizer_id int not null references fertilizers(id),
-            every_X_month int not null,
+            plant_id integer not null references plants(id),
+            fertilizer_id integer not null references fertilizers(id),
+            every_X_month integer not null,
             primary key(plant_id, fertilizer_id)
         );
         
         -- таблица, в которой написано как часто нужно рыхлить землю у растения
         create table plant_loosening (
-            plant_id int not null references plants(id),
-            every_X_day int not null,
+            plant_id integer not null references plants(id),
+            every_X_day integer not null,
             primary key(plant_id)
         );
         
         -- таблица, в которой написано как часто нужно опрыскивать растение
         create table plant_spraying (
-            plant_id int not null references plants(id),
-            every_X_day int not null,
+            plant_id integer not null references plants(id),
+            every_X_day integer not null,
             primary key(plant_id)
         );
         
@@ -178,8 +178,8 @@ class DBCreate {
         
         -- таблица, в которой по растению можно посмотреть болезни, которые часто у него бывают
         create table illnesses_plants (
-            plant_id int not null references plants(id),
-            illnesses_id int not null references illnesses(id),
+            plant_id integer not null references plants(id),
+            illnesses_id integer not null references illnesses(id),
             primary key(plant_id, illnesses_id)
         );
         
@@ -197,18 +197,13 @@ class DBCreate {
         -- записываться информация по датам о делах всяких
         --create type works_with_plant as enum ('watering', 'transplant', 'fertilizers', 'loosening', 'spraying');
         
-        create table work_enum (
-            id integer primary key autoincrement not null,
-            work text
-        );
+        -- 1 - watering, 2 - transplant, 3 - fertilizers, 5 - loosening, 6 - spraying
         
-        create table calendar (
-            day text  not null,
-            plant_id integer not null references plants_of_user(id),
-            work_id int not null references work_enum(id),
-            status int not null default 0,
-            check (status = 1 or status = 0), -- 1 - дело сделано, -- 0 - дело не сделано
-            primary key(day, plant_id, work_id)
+            create table calendar (
+            day text not null,
+            plant_name text not null references plants_of_user(name) on delete cascade,
+            work_id integer not null,
+            primary key(day, plant_name, work_id)
         );
     """.trimIndent()
 }
